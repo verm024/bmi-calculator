@@ -36,6 +36,6 @@ app.all('*', (req, res, next) => {
     res.status(403).send({error: 'Forbidden'})
 })
 
-app.listen(5000, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log('Listening to port 5000')
 })
