@@ -58,7 +58,7 @@ app.post('/calculate', (req, res, next) => {
 })
 
 app.all('*', (req, res, next) => {
-    res.status(403).send({error: 'Forbidden'})
+    res.status(403).send({message: 'Forbidden'})
 })
 
 app.listen(process.env.PORT || 8080, () => {
