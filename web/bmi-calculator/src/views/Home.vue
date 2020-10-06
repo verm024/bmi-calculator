@@ -2,10 +2,20 @@
     <div class="home">
         <div class="container d-flex justify-center align-center">
             <v-row>
-                <v-col class="col-10 offset-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
-                    <v-card dark color="#1a1c20" class="wrapper d-flex justify-center flex-column align-center" rounded="xl">
-                        <v-card-title class="title">
-                            <h2>Body Mass Index Calculator</h2>
+                <v-col class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+                    <v-card dark color="#1a1c20" :style="$vuetify.breakpoint.width > 600 ? 'padding: 70px 100px;' : 'padding: 60px 30px;'" class="wrapper d-flex justify-center flex-column align-center" rounded="xl">
+                        <v-card-title class="title align-center flex-column">
+                            <h2 v-if="$vuetify.breakpoint.width > 960">Body Mass Index Calculator</h2>
+                            <h3 v-else-if="$vuetify.breakpoint.width > 600">Body Mass Index Calculator</h3>
+                            <h4 v-else>Body Mass Index Calculator</h4>
+                            <div class="text-center subtitle">
+                                <div class="nama">
+                                    <span>Muhammad Naufal Arkan Rafii</span>
+                                </div>
+                                <div class="nim">
+                                    <span>18/424193/PA/18298</span>
+                                </div>
+                            </div>
                         </v-card-title>
                         <v-card-text class="form">
                             <div class="input-wrapper">
@@ -35,6 +45,17 @@
                 </v-col>
             </v-row>
         </div>
+        <v-dialog v-model="loader" width="250px" persistent >
+            <v-card rounded="xl" class="loader-card" color="#f4f4f4">
+                <v-card-text>
+                    <v-row class="justify-center">
+                        <v-col class="col-12 text-center">
+                            <span class="headline">Please wait...</span>\
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -55,11 +76,13 @@ export default {
                     v => !!v || 'Field is required',
                     v => (!isNaN(parseFloat(v)) && v >= 1 && v <= 999) || 'Value can\'t be less than 1 and more than 999'
                 ]
-            }
+            },
+            loader: false
         }
     },
     methods: {
         async findBMI(){
+            this.loader = true
             let notFoundInvalid = true
             Object.keys(this.form).forEach(f => {
                 let inputValid = this.$refs[f].validate(true)
@@ -76,10 +99,16 @@ export default {
                     })
                     this.result = result.data
                 } catch (error) {
-                    alert(error.message)
-                    console.error(error.message)
+                    if(error.response.status == 400 || error.response.status == 403){
+                        console.error(error.response.status + ': ' + error.response.data.message)
+                    }
+                    else{
+                        console.error(error.message)
+                    }
+                    alert(error.message + ', please try to refresh the page!')
                 }   
             }
+            this.loader = false
         }
     },
     computed: {
@@ -101,7 +130,6 @@ export default {
     }
 
     .wrapper{
-        padding: 70px 100px;
         max-height: 80vh;
         overflow-y: auto;
         box-shadow: 2px 4px 30px 0px rgba(26,28,32,.3) !important;
@@ -109,6 +137,16 @@ export default {
 
     .title{
         margin-bottom: 30px;
+    }
+
+    .subtitle span{
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1;
+    }
+
+    .nim{
+        margin-top: -10px;
     }
 
     .form{
@@ -140,5 +178,13 @@ export default {
     .result-title{
         font-size: 18px;
         color: #f4f4f4;
+    }
+
+    .loader-card{
+        padding-top: 20px !important;
+    }
+
+    .loader-card span{
+        color: #1a1c20;
     }
 </style>
