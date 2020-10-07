@@ -4,9 +4,9 @@ Repository untuk tugas Mata Kuliah Kapita Selekta Pengembangan Perangkat Lunak B
 
 
 
--__**Nama**__: Muhammad Naufal Arkan Rafii
+- __*Nama*__: Muhammad Naufal Arkan Rafii
 
--__**NIM**__: 18/424193/PA/18298
+- __*NIM*__: 18/424193/PA/18298
 
 
 
