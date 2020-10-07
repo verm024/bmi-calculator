@@ -17,5 +17,13 @@ export default {
   data: () => ({
     //
   }),
+  watch: {
+    '$route': {
+      handler: (to, from) => {
+          document.title = to.meta.title || "BMI Calculator"
+      },
+      immediate: true
+    }
+  },
 };
 </script>
