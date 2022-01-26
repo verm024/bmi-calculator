@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import Home from './views/Home';
+import Home from "./views/Home";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     Home,
@@ -18,12 +18,12 @@ export default {
     //
   }),
   watch: {
-    '$route': {
+    $route: {
       handler: (to, from) => {
-          document.title = to.meta.title || "BMI Calculator"
+        document.title = to.meta.title || "BMI Calculator";
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 };
 </script>
